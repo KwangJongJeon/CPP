@@ -1,0 +1,83 @@
+/*
+	세금과 연금
+	연금료와 세금을 모두 합쳐서 연봉의 30%로 가정
+	연금은 퇴직 다음해부터 사망년도까지 지급
+	연금의 금액은 전체 재직 기간 평균 연봉의 45%
+	연금은 오르지 않는다고 가정
+*/
+
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+
+void salaryCalculator(double annual_salary, const double &increase_rate ,int &start_age, const int &retire_age, const int& deadAge)
+{
+	
+	// FILE *file = fopen("income_history.txt", "w"); C방식
+
+	double total_income = 0.0;
+	double pension = annual_salary;
+	ofstream of("income_history.txt"); // 아웃풋 파일 스트림
+	
+	for(; start_age <= retire_age; ++start_age)
+	{
+		// fprintf(file, "%f %f\n", annual_salary, total_income);
+		of << annual_salary << " " << total_income << endl;
+		
+		total_income += annual_salary * (1.0 - 0.3);
+		
+		cout << 
+			"age: " << start_age << 
+			" annual salary " << annual_salary <<
+			" total_income " << total_income << endl;
+		
+		if(start_age < 55) annual_salary *= 1.0 + increase_rate;
+		
+		// 연봉 피크
+		if(start_age == 55) annual_salary /= 2; 
+	}
+	
+	pension = ((annual_salary + pension) / 2) * 0.45;
+	
+	for(; start_age <= deadAge; ++start_age)
+	{
+		cout << "age: " << start_age << " annual salary " << pension << endl;
+		of << pension << " " << total_income << endl;
+		total_income += pension;
+	}
+	
+	
+	cout << "생에 받을 수 있는 총 소득 : " << total_income << endl;
+	// fclose(file);
+	of.close();
+
+}
+
+
+int main()
+{
+	
+
+	double annual_salary = 0.0;
+	double increase_rate = 0.0;
+	int start_age = 0.0;
+	int retire_age = 0.0;
+	int dead_age = 0.0;
+	
+	cout << "Input your first annual salary: ";
+	cin >> annual_salary;
+	cout << "Input your annual salary increase rate:  ";
+	cin >> increase_rate;
+	cout << "Input your start age:  ";
+	cin >> start_age;
+	cout << "Input your retire age :  ";
+	cin >> retire_age;
+	cout << "Input your dead age : ";
+	cin >> dead_age;
+	
+	salaryCalculator(annual_salary, increase_rate, start_age, retire_age, dead_age);
+
+	
+}

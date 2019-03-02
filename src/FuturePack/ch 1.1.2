@@ -1,0 +1,48 @@
+/*
+	미래기술 연습문제 패키지 
+	나는 평생 얼마를 벌 수 있을까?
+	직장인 생애소득
+	초봉 0.3억원
+	연봉 상승률이 매년 3%
+	정년 25세에서 60세까지
+*/
+
+#include <iostream>
+
+using namespace std;
+
+
+void salaryCalculator(double &annual_salary, const double &increase_rate ,int &start_age, const int &retire_age)
+{
+	double total_income = 0.0;
+	
+	for(; start_age <= retire_age; ++start_age)
+	{
+		cout << "age: " << start_age << " annual salary " << annual_salary << endl;
+		
+		total_income += annual_salary;
+		annual_salary *= (1.0 * increase_rate);
+	}
+	
+	cout << "생에 받을 수 있는 총 소득 : " << total_income << endl;
+}
+
+
+int main()
+{
+	double annual_salary = 0.0;
+	double increase_rate = 0.0;
+	int start_age = 0.0;
+	int retire_age = 0.0;
+	
+	cout << "Input your first annual salary: ";
+	cin >> annual_salary;
+	cout << "Input your annual salary increase rate:  ";
+	cin >> increase_rate;
+	cout << "Input your start age:  ";
+	cin >> start_age;
+	cout << "Input your retire age :  ";
+	cin >> retire_age;
+	
+	salaryCalculator(annual_salary, increase_rate, start_age, retire_age);
+}

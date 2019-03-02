@@ -1,0 +1,62 @@
+/*
+	미래기술 연습문제 패키지 
+	3. 눈으로 확인하자
+	파일로 출력해보자
+	스프레드 시트로 눈으로 확인하자
+*/
+
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+
+void salaryCalculator(double &annual_salary, const double &increase_rate ,int &start_age, const int &retire_age)
+{
+	
+	// FILE *file = fopen("income_history.txt", "w"); C방식
+
+	double total_income = 0.0;
+	
+	ofstream of("income_history.txt"); // 아웃풋 파일 스트림
+	
+	for(; start_age <= retire_age; ++start_age)
+	{
+		cout << "age: " << start_age << " annual salary " << annual_salary << endl;
+		
+		// fprintf(file, "%f %f\n", annual_salary, total_income);
+		of << start_age << " " << annual_salary << endl;
+		total_income += annual_salary;
+		annual_salary += (annual_salary * (1.0 * increase_rate));
+	}
+	of.close();
+	
+	cout << "생에 받을 수 있는 총 소득 : " << total_income << endl;
+	// fclose(file);
+	
+
+}
+
+
+int main()
+{
+	
+
+	double annual_salary = 0.0;
+	double increase_rate = 0.0;
+	int start_age = 0.0;
+	int retire_age = 0.0;
+	
+	cout << "Input your first annual salary: ";
+	cin >> annual_salary;
+	cout << "Input your annual salary increase rate:  ";
+	cin >> increase_rate;
+	cout << "Input your start age:  ";
+	cin >> start_age;
+	cout << "Input your retire age :  ";
+	cin >> retire_age;
+	
+	salaryCalculator(annual_salary, increase_rate, start_age, retire_age);
+
+	
+}
